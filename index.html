@@ -2,42 +2,43 @@
 <html lang="de">
 <head>
   <meta charset="utf-8">
-  <title>WebAR mit skalierbarem 3D-Modell</title>
+  <title>WebAR – Tripo Gebäude</title>
+  <!-- Model-Viewer für AR und 3D-Anzeige -->
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
   <style>
-    body, html { margin:0; padding:0; height:100%; }
-    #container { position: relative; width:100%; height:100%; }
-    #slider { position: absolute; top:10px; left:50%; transform:translateX(-50%); z-index:10; }
+    body, html { margin:0; padding:0; height:100%; overflow:hidden; }
+    #slider {
+      position:absolute;
+      top:10px; left:50%;
+      transform:translateX(-50%);
+      z-index:10;
+      background:rgba(255,255,255,0.6);
+      padding:5px;
+      border-radius:5px;
+    }
   </style>
 </head>
 <body>
-  <div id="container">
-    <!-- Dein 3D-Modell mit AR-Funktion -->
-    <model-viewer
-      id="viewer"
-      src="tripo_pbr_model_09149cd8-0e9d-4fd2-b0bc-f2129039e195.glb"
-      alt="3D Modell"
-      camera-controls
-      auto-rotate
-      ar
-      ar-modes="scene-viewer quick-look"
-      ar-scale="auto"
-      style="width:100%; height:100%;">
-    </model-viewer>
+  <model-viewer
+    id="viewer"
+    src="tripo_pbr_model_09149cd8-0e9d-4fd2-b0bc-f2129039e195.glb"
+    alt="Tripo Gebäude"
+    camera-controls
+    auto-rotate
+    ar
+    ar-modes="scene-viewer quick-look"
+    ar-scale="auto"
+    style="width:100vw; height:100vh;">
+  </model-viewer>
 
-    <!-- Schieberegler zur Skalierung -->
-    <input id="slider" type="range" min="0.1" max="3" value="1" step="0.05">
-  </div>
+  <input id="slider" type="range" min="0.1" max="3" value="1" step="0.05" title="Modell skalieren">
 
   <script>
     const viewer = document.getElementById('viewer');
     const slider = document.getElementById('slider');
-
     slider.addEventListener('input', () => {
       const s = slider.value;
       viewer.scale = `${s} ${s} ${s}`;
-      // Neuer Zoom, wenn man will:
-      // viewer.cameraOrbit = `auto auto ${100 * s}%`;
     });
   </script>
 </body>
